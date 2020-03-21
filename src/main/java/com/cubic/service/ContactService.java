@@ -61,7 +61,7 @@ public class ContactService {
 			phoneEntity.setMainContactEntity(mainContactEntity);
 			mainContactEntity.setPhone(phoneEntities);
 			phoneEntities.add(phoneEntity);
-		
+
 			contactRepository.save(mainContactEntity);
 		}
 	}
@@ -153,8 +153,9 @@ public class ContactService {
 	public void updateContacts(int id, MainContactDto mainContactDto) {
 		Optional<MainContactEntity> mainContactEntity = contactRepository.findById(id);
 		if (mainContactEntity.isPresent()) {
-			MainContactEntity mainContactEntity2 = new MainContactEntity();
+			MainContactEntity mainContactEntity2 = mainContactEntity.get();
 			mainContactEntity2.setEmail(mainContactDto.getEmail());
+			mainContactEntity2.setUuid(UUID.randomUUID().toString());
 
 			NameEntity nameEntity = mainContactEntity2.getName();
 			NameDto nameDto = mainContactDto.getName();
@@ -181,13 +182,14 @@ public class ContactService {
 					PhoneEntity phoneEntity = new PhoneEntity();
 					phoneEntity.setNumber(p.getNumber());
 					phoneEntity.setType(p.getType());
-					phoneEntities.add(phoneEntity);
 					phoneEntity.setMainContactEntity(mainContactEntity2);
+					phoneEntities.add(phoneEntity);
+
 					mainContactEntity2.setPhone(phoneEntities);
 				}
-
 			}
-			contactRepository.save(mainContactEntity);
+			contactRepository.save(mainContactEntity2);
 		}
+
 	}
 }
