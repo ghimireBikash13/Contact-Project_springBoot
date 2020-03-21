@@ -179,6 +179,7 @@ public class ContactService {
 
 			if (phoneDtos != null) {
 				for (PhoneDto p : phoneDtos) {
+					if(phoneEntities == null) {
 					PhoneEntity phoneEntity = new PhoneEntity();
 					phoneEntity.setNumber(p.getNumber());
 					phoneEntity.setType(p.getType());
@@ -186,6 +187,9 @@ public class ContactService {
 					phoneEntities.add(phoneEntity);
 
 					mainContactEntity2.setPhone(phoneEntities);
+					}else {
+						mainContactEntity2.setPhone(phoneEntities);
+					}
 				}
 			}
 			contactRepository.save(mainContactEntity2);
